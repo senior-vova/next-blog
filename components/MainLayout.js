@@ -10,7 +10,7 @@ export default function MainLayout({ children, title, activeRoute }) {
       </Head>
       <div className="container-fluid bg-light min-vh-100">
         <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
             <Link href={"/"}>
               <a className="navbar-brand">Next Blog</a>
             </Link>
@@ -53,6 +53,19 @@ export default function MainLayout({ children, title, activeRoute }) {
           <main>{children}</main>
         </div>
       </div>
+      <footer className="blog-footer">
+        <p>
+          Blog template built for{" "}
+          <a href="https://github.com/ags-devs-team" target="_blank">
+            AGS
+          </a>{" "}
+          by{" "}
+          <a href="https://github.com/senior-vova" target="_blank">
+            @senior-vova
+          </a>
+          .
+        </p>
+      </footer>
     </>
   );
 }
