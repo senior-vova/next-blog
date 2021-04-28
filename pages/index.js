@@ -1,65 +1,74 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import MainLayout from "../components/MainLayout";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+    <MainLayout title={"Next Blog | Home"} activeRoute={"home"}>
+      <div className="jumbotron mt-4 mb-3 py-3 px-4 text-dark border rounded bg-white">
+        <h3>
+          Welcome to Next Blog example by{" "}
+          <a href="https://github.com/senior-vova" target="_blank">
+            Senior Vova
           </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+        </h3>
+        <h3>
+          Fork me on Github{" "}
+          <a href="https://github.com/senior-vova/next-blog" target="_blank">
+            Next Blog
           </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        </h3>
+      </div>
+      <div className="jumbotron p-4 text-white rounded bg-dark">
+        <div className="col-md-6 px-0">
+          <h1 className="display-4 font-italic">Article of Week</h1>
+          <p className="lead my-3">
+            Multiple lines of text that form the lede, informing new readers
+            quickly and efficiently about what’s most interesting in this post’s
+            contents.
+          </p>
+          <p className="lead mb-0">
+            <Link href={"/articles"}>
+              <a className="text-white font-weight-bold">Continue reading...</a>
+            </Link>
+          </p>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      </div>
+      <div className="row mb-2">
+        <div className="col-md-6">
+          <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div className="col p-4 d-flex flex-column position-static">
+              <strong className="d-inline-block mb-2 text-primary">
+                World
+              </strong>
+              <h3 className="mb-0">Featured post</h3>
+              <div className="mb-1 text-muted">Nov 12</div>
+              <p className="card-text mb-auto">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content.
+              </p>
+              <a className="stretched-link">Continue reading</a>
+            </div>
+            <div className="col-auto d-none d-lg-block"></div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div className="col p-4 d-flex flex-column position-static">
+              <strong className="d-inline-block mb-2 text-success">
+                Design
+              </strong>
+              <h3 className="mb-0">Post title</h3>
+              <div className="mb-1 text-muted">Nov 11</div>
+              <p className="mb-auto">
+                This is a wider card with supporting text below as a natural
+                lead-in to additional content.
+              </p>
+              <a className="stretched-link">Continue reading</a>
+            </div>
+            <div className="col-auto d-none d-lg-block"></div>
+          </div>
+        </div>
+      </div>
+    </MainLayout>
+  );
 }
