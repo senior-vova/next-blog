@@ -261,12 +261,13 @@ export default function Home({ mainPost, posts }) {
   );
 }
 
-Home.getInitialProps = async (ctx) => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/1`);
-  const res2 = await fetch(`https://jsonplaceholder.typicode.com/posts/2`);
-  const res3 = await fetch(`https://jsonplaceholder.typicode.com/posts/3`);
-  const pars = await res.json();
-  const pars2 = await res2.json();
-  const pars3 = await res3.json();
-  return { mainPost: pars, posts: [pars2, pars3] };
-};
+export async function getServerSideProps(ctx) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+  const posts = await res.json();
+  return {
+    props: {
+      mainPost: posts[0],
+      posts: [posts[1], posts[2]],
+    },
+  };
+}

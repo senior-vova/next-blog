@@ -122,3 +122,10 @@ h6 {
 .big-letter::first-letter {
   text-transform: uppercase;
 }
+
+.hover {
+  box-shadow: 0 0 10px 1px rgba(153, 153, 153, 0.747) !important;
+}
+.hover:hover {
+  box-shadow: 0 0 15px 2px rgba(153, 153, 153, 0.863) !important;
+}

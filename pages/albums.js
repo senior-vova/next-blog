@@ -1,0 +1,42 @@
+import MainLayout from "../components/MainLayout";
+import Album from "../components/Album";
+
+export default function Albums({ albums }) {
+  return (
+    <MainLayout title={"Next Blog | Albums"} activeRoute={"albums"}>
+      <div className="container pt-3">
+        <h1>Albums</h1>
+        <div className="row mb-2">
+          <div className="col-6">
+            <div className="row">
+              {albums
+                .filter((album) => album.id % 2 === 1)
+                .map((v, i) => (
+                  <Album key={i} title={v.title} id={v.id} />
+                ))}
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="row">
+              {albums
+                .filter((album) => album.id % 2 === 0)
+                .map((v, i) => (
+                  <Album key={i} title={v.title} id={v.id} />
+                ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </MainLayout>
+  );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/albums`);
+  const albums = await res.json();
+  return {
+    props: {
+      albums,
+    },
+  };
+}

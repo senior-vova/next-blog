@@ -22,7 +22,7 @@ export default function MainLayout({ children, title, activeRoute }) {
                       activeRoute === "home" ? "active" : ""
                     }`}
                   >
-                    Главная
+                    Home
                   </a>
                 </Link>
               </li>
@@ -33,7 +33,7 @@ export default function MainLayout({ children, title, activeRoute }) {
                       activeRoute === "articles" ? "active" : ""
                     }`}
                   >
-                    Статьи
+                    Articles
                   </a>
                 </Link>
               </li>
@@ -44,7 +44,7 @@ export default function MainLayout({ children, title, activeRoute }) {
                       activeRoute === "albums" ? "active" : ""
                     }`}
                   >
-                    Альбомы
+                    Albums
                   </a>
                 </Link>
               </li>
