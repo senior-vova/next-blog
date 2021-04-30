@@ -1,5 +1,6 @@
 import MainLayout from "../components/MainLayout";
 import Album from "../components/Album";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 export default function Albums({ albums }) {
   return (
@@ -31,12 +32,12 @@ export default function Albums({ albums }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/albums`);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch(`${process.env.API_URL}/albums`);
   const albums = await res.json();
   return {
     props: {
       albums,
     },
   };
-}
+};

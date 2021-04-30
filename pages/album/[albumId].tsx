@@ -1,3 +1,4 @@
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import MainLayout from "../../components/MainLayout";
 import Photo from "../../components/Photo";
@@ -21,7 +22,10 @@ export default function Album({ album, photos }) {
   }
 
   return (
-    <MainLayout title={`Next Blog | Album ${router.query.albumId}`}>
+    <MainLayout
+      title={`Next Blog | Album ${router.query.albumId}`}
+      activeRoute=""
+    >
       <div className="container pt-3 d-flex flex-column align-items-start">
         <h1 className="big-letter mb-3 mr-5">{album.title}</h1>
         <pre className="big-letter">{album.body}</pre>
@@ -54,14 +58,16 @@ export default function Album({ album, photos }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   const postRes = await fetch(
-    `https://jsonplaceholder.typicode.com/albums/${ctx.query.albumId}`
+    `${process.env.API_URL}/albums/${ctx.query.albumId}`
   );
   const album = await postRes.json();
   const photosRes = await fetch(
-    `https://jsonplaceholder.typicode.com/albums/${ctx.query.albumId}/photos`
+    `${process.env.API_URL}/albums/${ctx.query.albumId}/photos`
   );
   const photos = await photosRes.json();
   return { props: { album, photos } };
-}
+};

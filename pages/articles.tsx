@@ -1,3 +1,4 @@
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import MainLayout from "../components/MainLayout";
 import Post from "../components/Post";
 
@@ -31,12 +32,12 @@ export default function Articles({ posts }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+export const getServerSideProps: GetServerSideProps = async () => {
+  const res = await fetch(`${process.env.API_URL}/posts`);
   const posts = await res.json();
   return {
     props: {
       posts,
     },
   };
-}
+};

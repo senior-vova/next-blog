@@ -1,3 +1,4 @@
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import Comment from "../../components/Comment";
 import MainLayout from "../../components/MainLayout";
@@ -5,7 +6,10 @@ import MainLayout from "../../components/MainLayout";
 export default function Article({ post, comments }) {
   const router = useRouter();
   return (
-    <MainLayout title={`Next Blog | Article ${router.query.articleId}`}>
+    <MainLayout
+      title={`Next Blog | Article ${router.query.articleId}`}
+      activeRoute=""
+    >
       <div className="container pt-3 d-flex flex-column align-items-start">
         <h1 className="big-letter mb-3 mr-5">{post.title}</h1>
         <pre className="big-letter">{post.body}</pre>
@@ -18,14 +22,16 @@ export default function Article({ post, comments }) {
   );
 }
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
   const postRes = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${ctx.query.articleId}`
+    `${process.env.API_URL}/posts/${ctx.query.articleId}`
   );
   const post = await postRes.json();
   const commentsRes = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${ctx.query.articleId}/comments`
+    `${process.env.API_URL}/posts/${ctx.query.articleId}/comments`
   );
   const comments = await commentsRes.json();
   return { props: { post, comments } };
-}
+};
