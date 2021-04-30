@@ -58,9 +58,13 @@ export default function Album({ album, photos }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
+interface GSSPI extends GetServerSidePropsContext {
+  query: {
+    albumId: string | null | undefined;
+  };
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GSSPI) => {
   const postRes = await fetch(
     `${process.env.API_URL}/albums/${ctx.query.albumId}`
   );

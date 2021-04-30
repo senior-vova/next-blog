@@ -22,9 +22,13 @@ export default function Article({ post, comments }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext
-) => {
+interface GSSPI extends GetServerSidePropsContext {
+  query: {
+    articleId: string | null | undefined;
+  };
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx: GSSPI) => {
   const postRes = await fetch(
     `${process.env.API_URL}/posts/${ctx.query.articleId}`
   );

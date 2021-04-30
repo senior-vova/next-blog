@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import MainLayout from "../components/MainLayout";
-import Post from "../components/Post";
+import MainLayout from "../../components/MainLayout";
+import Post from "../../components/Post";
 
 export default function Articles({ posts }) {
   return (
