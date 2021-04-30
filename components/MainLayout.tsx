@@ -11,12 +11,12 @@ export default function MainLayout({ children, title, activeRoute }) {
       <div className="container-fluid bg-light min-vh-100">
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
-            <Link href={"/"}>
+            <Link href={"/"} as={process.env.BACKEND_URL + `/`}>
               <a className="navbar-brand">Next Blog</a>
             </Link>
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link href={"/"}>
+                <Link href={"/"} as={process.env.BACKEND_URL + `/`}>
                   <a
                     className={`nav-link ${
                       activeRoute === "home" ? "active" : ""
@@ -27,7 +27,10 @@ export default function MainLayout({ children, title, activeRoute }) {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href={"/articles"}>
+                <Link
+                  href={"/articles"}
+                  as={process.env.BACKEND_URL + `/articles`}
+                >
                   <a
                     className={`nav-link ${
                       activeRoute === "articles" ? "active" : ""
@@ -38,7 +41,7 @@ export default function MainLayout({ children, title, activeRoute }) {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href={"/albums"}>
+                <Link href={"/albums"} as={process.env.BACKEND_URL + `/albums`}>
                   <a
                     className={`nav-link ${
                       activeRoute === "albums" ? "active" : ""

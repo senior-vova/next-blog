@@ -8,7 +8,10 @@ export default function Post({ title, id, body }) {
           <div className="col p-4 d-flex flex-column">
             <h3 className="mb-0 big-letter">{title}</h3>
             <p className="my-3 big-letter">{body}</p>
-            <Link href={`/article/${id}`}>
+            <Link
+              href={`/article/${id}`}
+              as={process.env.BACKEND_URL + `/article/${id}`}
+            >
               <a className="stretched-link">Continue reading</a>
             </Link>
           </div>

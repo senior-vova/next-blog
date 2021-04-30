@@ -25,7 +25,10 @@ export default function Home({ mainPost, posts }) {
           <h1 className="display-4 font-italic">Article of Week</h1>
           <p className="lead my-3 big-letter">{mainPost.title}</p>
           <p className="lead mb-0">
-            <Link href={`/article/${mainPost.id}`}>
+            <Link
+              href={`/article/${mainPost.id}`}
+              as={process.env.BACKEND_URL + `/article/${mainPost.id}`}
+            >
               <a className="text-white font-weight-bold">Continue reading...</a>
             </Link>
           </p>
@@ -41,7 +44,10 @@ export default function Home({ mainPost, posts }) {
               <h3 className="mb-0 big-letter">{posts[1].title}</h3>
               <div className="mb-1 text-muted">Nov 12</div>
               <p className="mb-auto big-letter">{posts[1].body}</p>
-              <Link href={`/article/${posts[1].id}`}>
+              <Link
+                href={`/article/${posts[1].id}`}
+                as={process.env.BACKEND_URL + `/article/${posts[1].id}`}
+              >
                 <a className="stretched-link">Continue reading</a>
               </Link>
             </div>
@@ -57,7 +63,10 @@ export default function Home({ mainPost, posts }) {
               <h3 className="mb-0 big-letter">{posts[0].title}</h3>
               <div className="mb-1 text-muted">Nov 11</div>
               <p className="mb-auto big-letter">{posts[0].body}</p>
-              <Link href={`/article/${posts[0].id}`}>
+              <Link
+                href={`/article/${posts[0].id}`}
+                as={process.env.BACKEND_URL + `/article/${posts[0].id}`}
+              >
                 <a className="stretched-link">Continue reading</a>
               </Link>
             </div>

@@ -7,7 +7,10 @@ export default function Album({ title, id }) {
         <div className="row no-gutters border rounded flex-md-row mb-4 hover">
           <div className="col p-4 d-flex flex-column">
             <h3 className="mb-0 big-letter">{title}</h3>
-            <Link href={`/album/${id}`}>
+            <Link
+              href={`/album/${id}`}
+              as={process.env.BACKEND_URL + `/album/${id}`}
+            >
               <a className="stretched-link">See</a>
             </Link>
           </div>
