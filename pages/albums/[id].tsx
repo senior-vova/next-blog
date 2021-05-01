@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import MainLayout from "../../components/MainLayout";
 import Photo from "../../components/Photo";
@@ -58,19 +58,24 @@ export default function Album({ album, photos }) {
   );
 }
 
-interface GSSPI extends GetServerSidePropsContext {
+interface GSSPI extends GetStaticPropsContext {
   query: {
-    albumId: string | null | undefined;
+    id: string | null | undefined;
   };
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GSSPI) => {
-  const postRes = await fetch(
-    `${process.env.API_URL}/albums/${ctx.query.albumId}`
-  );
+export const getStaticPaths: GetStaticPaths = async (ctx: GSSPI) => {
+  const res = await fetch(`${process.env.API_URL}/albums`);
+  const albums: Array<any> = await res.json();
+  const paths = albums.map((v) => ({ params: { id: v.id } }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx: GSSPI) => {
+  const postRes = await fetch(`${process.env.API_URL}/albums/${ctx.query.id}`);
   const album = await postRes.json();
   const photosRes = await fetch(
-    `${process.env.API_URL}/albums/${ctx.query.albumId}/photos`
+    `${process.env.API_URL}/albums/${ctx.query.id}/photos`
   );
   const photos = await photosRes.json();
   return { props: { album, photos } };

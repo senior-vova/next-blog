@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import Comment from "../../components/Comment";
 import MainLayout from "../../components/MainLayout";
@@ -22,19 +22,25 @@ export default function Article({ post, comments }) {
   );
 }
 
-interface GSSPI extends GetServerSidePropsContext {
+interface GSSPI extends GetStaticPropsContext {
   query: {
-    articleId: string | null | undefined;
+    id: string | null | undefined;
   };
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx: GSSPI) => {
-  const postRes = await fetch(
-    `${process.env.API_URL}/posts/${ctx.query.articleId}`
-  );
+export const getStaticPaths: GetStaticPaths = async (ctx: GSSPI) => {
+  const res = await fetch(`${process.env.API_URL}/posts`);
+  const articles: Array<any> = await res.json();
+  const ids = articles.map((v) => String.prototype.toString(v.id));
+  const paths = ids.map((v) => ({ params: { id: v } }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async (ctx: GSSPI) => {
+  const postRes = await fetch(`${process.env.API_URL}/posts/${ctx.query.id}`);
   const post = await postRes.json();
   const commentsRes = await fetch(
-    `${process.env.API_URL}/posts/${ctx.query.articleId}/comments`
+    `${process.env.API_URL}/posts/${ctx.query.id}/comments`
   );
   const comments = await commentsRes.json();
   return { props: { post, comments } };

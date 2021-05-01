@@ -1,6 +1,6 @@
 import MainLayout from "../../components/MainLayout";
 import Album from "../../components/Album";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSideProps, GetStaticPaths } from "next";
 
 export default function Albums({ albums }) {
   return (
