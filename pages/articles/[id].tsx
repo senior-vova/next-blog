@@ -31,7 +31,7 @@ interface GSSPI extends GetStaticPropsContext {
 export const getStaticPaths: GetStaticPaths = async (ctx: GSSPI) => {
   const res = await fetch(`${process.env.API_URL}/posts`);
   const articles: Array<any> = await res.json();
-  const ids = articles.map((v) => String.prototype.toString(v.id));
+  const ids = articles.map((v) => v.id.toString());
   const paths = ids.map((v) => ({ params: { id: v } }));
   return { paths, fallback: false };
 };
