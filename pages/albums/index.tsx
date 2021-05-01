@@ -1,6 +1,16 @@
 import MainLayout from "../../components/MainLayout";
 import Album from "../../components/Album";
-import { GetServerSideProps, GetStaticPaths } from "next";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`${process.env.API_URL}/albums`);
+  const albums = await res.json();
+  return {
+    props: {
+      albums,
+    },
+  };
+};
 
 export default function Albums({ albums }) {
   return (
@@ -31,13 +41,3 @@ export default function Albums({ albums }) {
     </MainLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${process.env.API_URL}/albums`);
-  const albums = await res.json();
-  return {
-    props: {
-      albums,
-    },
-  };
-};

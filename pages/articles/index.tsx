@@ -1,6 +1,16 @@
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetStaticProps } from "next";
 import MainLayout from "../../components/MainLayout";
 import Post from "../../components/Post";
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`${process.env.API_URL}/posts`);
+  const posts = await res.json();
+  return {
+    props: {
+      posts,
+    },
+  };
+};
 
 export default function Articles({ posts }) {
   return (
@@ -11,8 +21,8 @@ export default function Articles({ posts }) {
           <div className="col-6">
             <div className="row">
               {posts
-                .filter((post) => post.id % 2 === 1)
-                .map((v, i) => (
+                .filter((post: any) => post.id % 2 === 1)
+                .map((v: any, i: number) => (
                   <Post key={i} title={v.title} body={v.body} id={v.id} />
                 ))}
             </div>
@@ -20,8 +30,8 @@ export default function Articles({ posts }) {
           <div className="col-6">
             <div className="row">
               {posts
-                .filter((post) => post.id % 2 === 0)
-                .map((v, i) => (
+                .filter((post: any) => post.id % 2 === 0)
+                .map((v: any, i: number) => (
                   <Post key={i} title={v.title} body={v.body} id={v.id} />
                 ))}
             </div>
@@ -31,13 +41,3 @@ export default function Articles({ posts }) {
     </MainLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${process.env.API_URL}/posts`);
-  const posts = await res.json();
-  return {
-    props: {
-      posts,
-    },
-  };
-};

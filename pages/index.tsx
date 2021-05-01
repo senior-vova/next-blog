@@ -1,6 +1,17 @@
 import MainLayout from "../components/MainLayout";
 import Link from "next/link";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`${process.env.API_URL}/posts`);
+  const posts = await res.json();
+  return {
+    props: {
+      mainPost: posts[0],
+      posts: [posts[1], posts[2]],
+    },
+  };
+};
 
 export default function Home({ mainPost, posts }) {
   return (
@@ -77,14 +88,3 @@ export default function Home({ mainPost, posts }) {
     </MainLayout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`${process.env.API_URL}/posts`);
-  const posts = await res.json();
-  return {
-    props: {
-      mainPost: posts[0],
-      posts: [posts[1], posts[2]],
-    },
-  };
-};

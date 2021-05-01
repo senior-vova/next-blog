@@ -1,10 +1,41 @@
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import {
+  GetStaticPaths,
+  GetStaticPathsContext,
+  GetStaticProps,
+  GetStaticPropsContext,
+} from "next";
 import { useRouter } from "next/router";
 import MainLayout from "../../components/MainLayout";
 import Photo from "../../components/Photo";
 
+interface GSSPI extends GetStaticPropsContext {
+  params: {
+    id: string | null;
+  };
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = [];
+  for (let index = 1; index <= 100; index++) {
+    paths.push({ params: { id: index.toString() } });
+  }
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }: GSSPI) => {
+  const postRes = await fetch(`${process.env.API_URL}/albums/${params.id}`);
+  const album = await postRes.json();
+  const photosRes = await fetch(
+    `${process.env.API_URL}/albums/${params.id}/photos`
+  );
+  const photos = await photosRes.json();
+  return { props: { album, photos } };
+};
+
 export default function Album({ album, photos }) {
   const router = useRouter();
+
+  if (router.isFallback) return <h1>Loading ...</h1>;
 
   const photosPart1 = [];
   const photosPart2 = [];
@@ -33,21 +64,21 @@ export default function Album({ album, photos }) {
         <div className="row">
           <div className="col-4">
             <div className="row d-flex justify-content-center">
-              {photosPart1.map((v, i) => (
+              {photosPart1.map((v: any, i: number) => (
                 <Photo key={i} title={v.title} url={v.url} />
               ))}
             </div>
           </div>
           <div className="col-4">
             <div className="row d-flex justify-content-center">
-              {photosPart2.map((v, i) => (
+              {photosPart2.map((v: any, i: number) => (
                 <Photo key={i} title={v.title} url={v.url} />
               ))}
             </div>
           </div>
           <div className="col-4">
             <div className="row d-flex justify-content-center">
-              {photosPart3.map((v, i) => (
+              {photosPart3.map((v: any, i: number) => (
                 <Photo key={i} title={v.title} url={v.url} />
               ))}
             </div>
@@ -57,26 +88,3 @@ export default function Album({ album, photos }) {
     </MainLayout>
   );
 }
-
-interface GSSPI extends GetStaticPropsContext {
-  query: {
-    id: string | null | undefined;
-  };
-}
-
-export const getStaticPaths: GetStaticPaths = async (ctx: GSSPI) => {
-  const res = await fetch(`${process.env.API_URL}/albums`);
-  const albums: Array<any> = await res.json();
-  const paths = albums.map((v) => ({ params: { id: v.id } }));
-  return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async (ctx: GSSPI) => {
-  const postRes = await fetch(`${process.env.API_URL}/albums/${ctx.query.id}`);
-  const album = await postRes.json();
-  const photosRes = await fetch(
-    `${process.env.API_URL}/albums/${ctx.query.id}/photos`
-  );
-  const photos = await photosRes.json();
-  return { props: { album, photos } };
-};
