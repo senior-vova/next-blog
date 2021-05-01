@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Falbums","\u002Farticles","\u002F","\u002Falbums\u002F[id]","\u002Farticles\u002F[id]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
