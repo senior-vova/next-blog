@@ -1,6 +1,7 @@
 import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
   GetStaticPaths,
-  GetStaticPathsContext,
   GetStaticProps,
   GetStaticPropsContext,
 } from "next";
@@ -8,21 +9,39 @@ import { useRouter } from "next/router";
 import Comment from "../../components/Comment";
 import MainLayout from "../../components/MainLayout";
 
-interface GSSPI extends GetStaticPropsContext {
+interface GSSPI extends GetServerSidePropsContext {
   params: {
     id: string | null;
   };
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = [];
-  for (let index = 1; index <= 100; index++) {
-    paths.push({ params: { id: index.toString() } });
-  }
-  return { paths, fallback: false };
-};
+// interface GSSPI extends GetStaticPropsContext {
+//   params: {
+//     id: string | null;
+//   };
+// }
 
-export const getStaticProps: GetStaticProps = async ({ params }: GSSPI) => {
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const paths = [];
+//   for (let index = 1; index <= 100; index++) {
+//     paths.push({ params: { id: index.toString() } });
+//   }
+//   return { paths, fallback: false };
+// };
+
+// export const getStaticProps: GetStaticProps = async ({ params }: GSSPI) => {
+//   const postRes = await fetch(`${process.env.API_URL}/posts/${params.id}`);
+//   const post = await postRes.json();
+//   const commentsRes = await fetch(
+//     `${process.env.API_URL}/posts/${params.id}/comments`
+//   );
+//   const comments = await commentsRes.json();
+//   return { props: { post, comments } };
+// };
+
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}: GSSPI) => {
   const postRes = await fetch(`${process.env.API_URL}/posts/${params.id}`);
   const post = await postRes.json();
   const commentsRes = await fetch(
