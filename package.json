@@ -2,7 +2,7 @@
   "name": "next-blog",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://senior-vova.github.io/speed-typing-simulator",
+  "homepage": "https://senior-vova.github.io/next-blog",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
